@@ -47,3 +47,9 @@ class OnPathCommand(BaseCommand):
         dir -- change to this directory or the one set on path
         """
         return 'cd %s' % (dir or self._path)
+
+class RepositoryIsMissing(Exception):
+    """This class represents a custom exception raised when a repository 
+    is not set
+    """
+    pass
