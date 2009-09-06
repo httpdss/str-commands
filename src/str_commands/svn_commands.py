@@ -1,6 +1,11 @@
-import subprocess, logging, os, sys
+"""
+Created on Aug 30, 2009
 
-class SVNCommands(object):
+@author: kenny
+"""
+from base_commands import OnPathCommand
+
+class SVNCommands(OnPathCommand):
     """
     This class represents common svn commands
     """
@@ -13,22 +18,26 @@ class SVNCommands(object):
         """
         self._repository = repository
 
-    def get_respository(self):
-        return self._respository
+    @property
+    def repository(self):
+        return self._repository
 
-    def set_repository(self, repo):
+    @repository.setter
+    def repository(self, repo):
         self._repository = repo
 
-    repository = property(get_repository, set_repository)
-
-    def checkout(self, working_dir, repo = "" ):
+    def checkout(self, working_dir = "", repo = "", use_path = False):
         """
         SVN checkout command
 
         working_dir -- path to the working directory
         repo -- respository to use. if not set, it uses the one declared by the instance
         """
-        subprocess.call("svn co %s %s" (self._getRepo(repo), working_dir), shell=True)
+        str_cmd = []
+        if use_path:
+            str_cmd.append(self.chdir())
+        str_cmd.append("svn co %s %s" % (self._getRepo(repo), working_dir))
+        return self.execute(str_cmd) 
 
     def update(self, working_dir):
         """
@@ -36,7 +45,11 @@ class SVNCommands(object):
         
         working_dir -- path to the working directory
         """
-        subprocess.call("cd %s; svn up" % working_dir, shell=True)
+        str_cmd = []
+        str_cmd.append(self.chdir(working_dir))
+        str_cmd.append("svn up")
+        return self.execute(str_cmd)
+        
 
     def _getRepo(self, repo = ""):
         if not (repo or self.repository):
@@ -49,11 +62,4 @@ class RepositoryIsMissing(Exception):
     """
     This class represents a custom exception raised when a repository is not set
     """
-
-    def __init__(self):
-        """
-        Constructor.
-        """
-        Exception.__init__(self)
-
-# vim: ai ts=4 sts=4 et sw=4
+    pass
