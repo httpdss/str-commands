@@ -38,5 +38,12 @@ class OnPathCommand(BaseCommand):
     def clear_path(self):
         self._path = None
 
-    def chdir(self, dir = None):
+    def chdir(self, dir = ""):
+        """Change directory
+        
+        Command:
+            cd %s
+            
+        dir -- change to this directory or the one set on path
+        """
         return 'cd %s' % (dir or self._path)
