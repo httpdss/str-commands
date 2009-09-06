@@ -27,31 +27,29 @@ class SVNCommands(OnPathCommand):
         self._repository = repo
 
     def checkout(self, working_dir = "", repo = "", use_path = False):
-        """
-        SVN checkout command
+        """SVN checkout command
 
         working_dir -- path to the working directory
-        repo -- respository to use. if not set, it uses the one declared by the instance
+        repo -- respository to use. if not set, it uses the one declared 
+        by the instance
+        
         """
         str_cmd = []
         if use_path:
             str_cmd.append(self.chdir())
-        str_cmd.append("svn co %s %s" % (self._getRepo(repo), working_dir))
-        return self.execute(str_cmd) 
+        str_cmd.append("svn co %s %s" % (self._get_repo(repo), working_dir))
+        return self.execute(str_cmd)
 
     def update(self, working_dir):
-        """
-        SVN update command
+        """SVN update command
         
         working_dir -- path to the working directory
-        """
-        str_cmd = []
-        str_cmd.append(self.chdir(working_dir))
-        str_cmd.append("svn up")
-        return self.execute(str_cmd)
         
+        """
+        return self.execute([self.chdir(working_dir), "svn up"])
 
-    def _getRepo(self, repo = ""):
+
+    def _get_repo(self, repo = ""):
         if not (repo or self.repository):
             raise RepositoryIsMissing
         if repo:
@@ -59,7 +57,7 @@ class SVNCommands(OnPathCommand):
         return self.repository
 
 class RepositoryIsMissing(Exception):
-    """
-    This class represents a custom exception raised when a repository is not set
+    """This class represents a custom exception raised when a repository 
+    is not set
     """
     pass

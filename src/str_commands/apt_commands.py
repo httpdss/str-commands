@@ -20,20 +20,21 @@ class AptCommands(OnPathCommand):
         return 'apt-get update'
 
     def install(self, apps):
-        """
-        install packages using apt-get
+        """Install packages using apt-get
+        
         """
         return APT_COMMAND % " ".join(apps)
 
     def upgrade(self):
-        """
-        upgrade packages using apt-get
+        """Upgrade packages using apt-get
+        
         """
         return 'apt-get upgrade'
 
     def dpkg_install(self, filename, location = "",
                      delete = True, use_path = False):
-        """
+        """Package installation
+        
         represents the "dpkg -i <filename>" command
         it automatically removes the package after installation
         
@@ -41,6 +42,7 @@ class AptCommands(OnPathCommand):
         location -- download location of .deb
         delete -- delete .deb after installation
         use_path -- if true it will cd to the current path
+        
         """
         str_cmd = []
         if use_path and self.path:
@@ -53,7 +55,7 @@ class AptCommands(OnPathCommand):
         return self.execute(str_cmd)
 
     def fix_install(self):
-        """
-        command to fix the dependencies of packages while installing
+        """command to fix the dependencies of packages while installing
+        
         """
         return "apt-get -f install -y"

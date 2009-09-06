@@ -26,7 +26,7 @@ class ApacheCommands(BaseCommand):
             /etc/init.d/apache2 restart
             
         """
-        return '/etc/init.d/apache2 restart'
+        return '/etc/init.d/apache%d restart' % self._version
 
     def enable_mods(self, mods):
         """Enable a list of apache modules
