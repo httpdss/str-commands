@@ -13,14 +13,16 @@ class BaseCommand(object):
         '''
         Constructor for base command class
         '''
-    def execute(self, str_cmd):
+    @staticmethod
+    def execute(str_cmd):
         """
             join all string commands received and output a ready
             to execute command
         """
         return "; ".join(str_cmd)
 
-    def get_args(self, *args):
+    @staticmethod
+    def get_args(*args):
         """return sent args separated by space"""
         return " ".join(args)
 
