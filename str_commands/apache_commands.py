@@ -18,6 +18,7 @@ class ApacheCommands(BaseCommand):
         """
         assert version
         self._version = version
+        super(ApacheCommands, self).__init__()
 
     def restart(self):
         """Restart the apache server

@@ -10,7 +10,7 @@ class GITCommands(RepositoryCommands):
     This class represents common git commands
     """
 
-    def clone(self, path = "", repo = "", name = ""):
+    def clone(self, path = "", repo = "", name = "", *args):
         """GIT clone command
 
         name -- folder name of clone
@@ -18,18 +18,20 @@ class GITCommands(RepositoryCommands):
         by the instance
         name -- folder name of clone
         
-        
         """
         str_cmd = []
         str_cmd.append(self.chdir(path))
-        str_cmd.append("git clone %s %s" % (self._get_repo(repo), name))
+        str_cmd.append("git clone %s %s %s" % (self.get_args(args),
+                                               self._get_repo(repo),
+                                               name))
         return self.execute(str_cmd)
 
-    def pull(self, path = ""):
+    def pull(self, path = "", *args):
         """GIT pull command
         
         path -- path to repository clone. if not set, uses self.path
         
         """
 
-        return self.execute([self.chdir(path), "git pull"])
+        return self.execute([self.chdir(path),
+                             "git pull %s" % self.get_args(args)])
