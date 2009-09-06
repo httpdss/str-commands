@@ -3,7 +3,7 @@ import apt_commands
 import svn_commands
 import git_commands
 
-VERSION = (0, 1, 0, 'alfa', 0)
+VERSION = (0, 1, 0, 'alfa', 1)
 
 apache = apache_commands.ApacheCommands()
 apt = apt_commands.AptCommands()
