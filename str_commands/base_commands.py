@@ -48,6 +48,31 @@ class OnPathCommand(BaseCommand):
         """
         return 'cd %s' % (dir or self._path)
 
+class RepositoryCommands(OnPathCommand):
+    
+    def __init__(self, repository = ""):
+        """
+        Constructor.
+        
+        repository -- repository address
+        """
+        self._repository = repository
+
+    @property
+    def repository(self):
+        return self._repository
+
+    @repository.setter
+    def repository(self, repo):
+        self._repository = repo
+    
+    def _get_repo(self, repo = ""):
+        if not (repo or self.repository):
+            raise RepositoryIsMissing
+        if repo:
+            return repo
+        return self.repository
+
 class RepositoryIsMissing(Exception):
     """This class represents a custom exception raised when a repository 
     is not set

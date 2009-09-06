@@ -3,28 +3,12 @@ Created on Aug 30, 2009
 
 @author: kenny
 """
-from base_commands import OnPathCommand
+from base_commands import RepositoryCommands
 
-class SVNCommands(OnPathCommand):
+class SVNCommands(RepositoryCommands):
     """
     This class represents common svn commands
     """
-
-    def __init__(self, repository = ""):
-        """
-        Constructor.
-        
-        repository -- repository address
-        """
-        self._repository = repository
-
-    @property
-    def repository(self):
-        return self._repository
-
-    @repository.setter
-    def repository(self, repo):
-        self._repository = repo
 
     def checkout(self, working_dir = "", repo = "", use_path = False):
         """SVN checkout command
@@ -47,17 +31,3 @@ class SVNCommands(OnPathCommand):
         
         """
         return self.execute([self.chdir(working_dir), "svn up"])
-
-
-    def _get_repo(self, repo = ""):
-        if not (repo or self.repository):
-            raise RepositoryIsMissing
-        if repo:
-            return repo
-        return self.repository
-
-class RepositoryIsMissing(Exception):
-    """This class represents a custom exception raised when a repository 
-    is not set
-    """
-    pass

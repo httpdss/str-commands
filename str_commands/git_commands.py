@@ -3,28 +3,12 @@ Created on Aug 30, 2009
 
 @author: kenny
 """
-from base_commands import OnPathCommand, RepositoryIsMissing
+from base_commands import RepositoryCommands
 
-class GITCommands(OnPathCommand):
+class GITCommands(RepositoryCommands):
     """
     This class represents common git commands
     """
-
-    def __init__(self, repository = ""):
-        """
-        Constructor.
-        
-        repository -- repository address
-        """
-        self._repository = repository
-
-    @property
-    def repository(self):
-        return self._repository
-
-    @repository.setter
-    def repository(self, repo):
-        self._repository = repo
 
     def clone(self, path = "", repo = "", name = ""):
         """GIT clone command
@@ -49,11 +33,3 @@ class GITCommands(OnPathCommand):
         """
 
         return self.execute([self.chdir(path), "git pull"])
-
-
-    def _get_repo(self, repo = ""):
-        if not (repo or self.repository):
-            raise RepositoryIsMissing
-        if repo:
-            return repo
-        return self.repository
