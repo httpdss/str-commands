@@ -10,6 +10,8 @@ svn = svn_commands.SVNCommands()
 git = git_commands.GITCommands()
 utils = utils_commands.UtilsCommands()
 
+link = utils.link
+
 def get_version():
     """return version with a specific format"""
     version = '%s.%s' % (VERSION[0], VERSION[1])

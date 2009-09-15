@@ -14,12 +14,10 @@ class UtilsCommands(OnPathCommand):
         """Make directory command
         
         """
-        str_cmd = []
         if directories:
-            str_cmd.append(self.chdir(path))
-            str_cmd = str_cmd + ['mkdir %s %s' %
-                                 (self.get_args(args), mkdir)
-                                 for mkdir in directories]
+            str_cmd = [self.chdir(path)] + ['mkdir %s %s' %
+                                            (self.get_args(args), mkdir)
+                                            for mkdir in directories]
         return self.execute(str_cmd)
 
     def copy(self, path = "", *args):
@@ -30,3 +28,14 @@ class UtilsCommands(OnPathCommand):
     def move(self, path = "", *args):
         """Move comand"""
         return self.execute([self.chdir(path), 'mv %s' % self.get_args(args)])
+
+    def link(self, path = "", symlink = True, *args):
+        """make link of files and folders"""
+        str_cmd = []
+        
+        sym = symlink and '-s' or ''
+        if path:
+            str_cmd.append(self.chdir(path))
+        
+        str_cmd.append('ln %s %s' % (sym, self.get_args(args)))
+        return self.execute(str_cmd)  
